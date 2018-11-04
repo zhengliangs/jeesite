@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.snh.dao.IntendApplicationDao">
+    
+	<sql id="intendApplicationColumns">
+		a.id AS "id",
+		a.username AS "username",
+		a.proposer_name AS "proposerName",
+		a.proposer_address AS "proposerAddress",
+		a.proposer_zipcode AS "proposerZipcode",
+		a.proposer_linkman AS "proposerLinkman",
+		a.proposer_phone AS "proposerPhone",
+		a.proposer_fax AS "proposerFax",
+		a.proposer_email AS "proposerEmail",
+		a.manufacturer_name AS "manufacturerName",
+		a.manufacturer_address AS "manufacturerAddress",
+		a.manufacturer_zipcode AS "manufacturerZipcode",
+		a.manufacturer_linkman AS "manufacturerLinkman",
+		a.manufacturer_phone AS "manufacturerPhone",
+		a.manufacturer_fax AS "manufacturerFax",
+		a.manufacturer_email AS "manufacturerEmail",
+		a.producer_name AS "producerName",
+		a.producer_address AS "producerAddress",
+		a.producer_zipcode AS "producerZipcode",
+		a.producer_linkman AS "producerLinkman",
+		a.producer_phone AS "producerPhone",
+		a.producer_fax AS "producerFax",
+		a.producer_email AS "producerEmail",
+		a.agent_name AS "agentName",
+		a.agent_address AS "agentAddress",
+		a.agent_zipcode AS "agentZipcode",
+		a.agent_linkman AS "agentLinkman",
+		a.agent_phone AS "agentPhone",
+		a.agent_fax AS "agentFax",
+		a.agent_email AS "agentEmail",
+		a.product_type1 AS "productType1",
+		a.product_type2 AS "productType2",
+		a.product_type3 AS "productType3",
+		a.f_admission AS "admission",
+		a.sanctifier AS "sanctifier",
+		a.record_no AS "recordNo",
+		a.authorize_date AS "authorizeDate",
+		a.application_date AS "applicationDate",
+		a.errortext AS "errortext"
+	</sql>
+	
+	<sql id="intendApplicationJoins">
+		
+	</sql>
+    
+	<select id="get" resultType="IntendApplication">
+		SELECT 
+			<include refid="intendApplicationColumns"/>
+		FROM hkg_com_intend a
+		<include refid="intendApplicationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="IntendApplication">
+		SELECT 
+			<include refid="intendApplicationColumns"/>
+		FROM hkg_com_intend a
+		<include refid="intendApplicationJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="IntendApplication">
+		SELECT 
+			<include refid="intendApplicationColumns"/>
+		FROM hkg_com_intend a
+		<include refid="intendApplicationJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hkg_com_intend(
+			id,
+			username,
+			proposer_name,
+			proposer_address,
+			proposer_zipcode,
+			proposer_linkman,
+			proposer_phone,
+			proposer_fax,
+			proposer_email,
+			manufacturer_name,
+			manufacturer_address,
+			manufacturer_zipcode,
+			manufacturer_linkman,
+			manufacturer_phone,
+			manufacturer_fax,
+			manufacturer_email,
+			producer_name,
+			producer_address,
+			producer_zipcode,
+			producer_linkman,
+			producer_phone,
+			producer_fax,
+			producer_email,
+			agent_name,
+			agent_address,
+			agent_zipcode,
+			agent_linkman,
+			agent_phone,
+			agent_fax,
+			agent_email,
+			product_type1,
+			product_type2,
+			product_type3,
+			f_admission,
+			sanctifier,
+			record_no,
+			authorize_date,
+			application_date,
+			errortext
+		) VALUES (
+			#{id},
+			#{username},
+			#{proposerName},
+			#{proposerAddress},
+			#{proposerZipcode},
+			#{proposerLinkman},
+			#{proposerPhone},
+			#{proposerFax},
+			#{proposerEmail},
+			#{manufacturerName},
+			#{manufacturerAddress},
+			#{manufacturerZipcode},
+			#{manufacturerLinkman},
+			#{manufacturerPhone},
+			#{manufacturerFax},
+			#{manufacturerEmail},
+			#{producerName},
+			#{producerAddress},
+			#{producerZipcode},
+			#{producerLinkman},
+			#{producerPhone},
+			#{producerFax},
+			#{producerEmail},
+			#{agentName},
+			#{agentAddress},
+			#{agentZipcode},
+			#{agentLinkman},
+			#{agentPhone},
+			#{agentFax},
+			#{agentEmail},
+			#{productType1},
+			#{productType2},
+			#{productType3},
+			#{admission},
+			#{sanctifier},
+			#{recordNo},
+			#{authorizeDate},
+			#{applicationDate},
+			#{errortext}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hkg_com_intend SET 	
+			username = #{username},
+			proposer_name = #{proposerName},
+			proposer_address = #{proposerAddress},
+			proposer_zipcode = #{proposerZipcode},
+			proposer_linkman = #{proposerLinkman},
+			proposer_phone = #{proposerPhone},
+			proposer_fax = #{proposerFax},
+			proposer_email = #{proposerEmail},
+			manufacturer_name = #{manufacturerName},
+			manufacturer_address = #{manufacturerAddress},
+			manufacturer_zipcode = #{manufacturerZipcode},
+			manufacturer_linkman = #{manufacturerLinkman},
+			manufacturer_phone = #{manufacturerPhone},
+			manufacturer_fax = #{manufacturerFax},
+			manufacturer_email = #{manufacturerEmail},
+			producer_name = #{producerName},
+			producer_address = #{producerAddress},
+			producer_zipcode = #{producerZipcode},
+			producer_linkman = #{producerLinkman},
+			producer_phone = #{producerPhone},
+			producer_fax = #{producerFax},
+			producer_email = #{producerEmail},
+			agent_name = #{agentName},
+			agent_address = #{agentAddress},
+			agent_zipcode = #{agentZipcode},
+			agent_linkman = #{agentLinkman},
+			agent_phone = #{agentPhone},
+			agent_fax = #{agentFax},
+			agent_email = #{agentEmail},
+			product_type1 = #{productType1},
+			product_type2 = #{productType2},
+			product_type3 = #{productType3},
+			f_admission = #{admission},
+			sanctifier = #{sanctifier},
+			record_no = #{recordNo},
+			authorize_date = #{authorizeDate},
+			application_date = #{applicationDate},
+			errortext = #{errortext}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM hkg_com_intend
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

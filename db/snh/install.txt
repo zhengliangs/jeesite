@@ -1,0 +1,80 @@
+系统安装配置流程
+
+1、java
+解压、设置路径
+vi /etc/profile
+export JAVA_HOME=/usr/java/jdk1.8.0_112  
+export CLASSPATH=.:%JAVA_HOME%/lib/dt.jar:%JAVA_HOME%/lib/tools.jar  
+export PATH=$PATH:$JAVA_HOME/bin  
+source /etc/profile
+
+2、tomcat
+useradd -M -r -d /dev/null -s /sbin/nologin tomcat -g iminda
+
+# cd /opt/tomcat/bin
+# tar -xf commons-daemon-native.tar.gz
+# cd commons-daemon-1.0.15-native-src/unix
+./configure
+make
+
+# cp jsvc /opt/tomcat/bin/
+# cd /opt/tomcat/bin/
+# rm -fr commons-daemon-1.0.15-native-src
+
+vi daemon.sh
+
+# chkconfig: 35 40 40
+# description: Tomcat
+
+export JAVA_HOME=/usr/java/jdk1.8.0_112
+export TOMCAT_HOME=/opt/tomcat
+export CATALINA_HOME=/opt/tomcat
+export CATALINA_BASE=/opt/tomcat
+export CATALINA_TMPDIR=/opt/tomcat/temp
+
+TOMCAT_USER=tomcat
+JAVA_HOME=/usr/java/jdk1.8.0_112  
+
+chkconfig --add tomcat
+修改rc3.d和rc5.d内的文件名称，排序在最后
+
+# chmod g+r -R /opt/tomcat
+# chmod g+w -R /opt/tomcat/webapps
+# chmod g+w -R /opt/tomcat/logs
+# chmod g+w -R /opt/tomcat/work
+# chmod g+w -R /opt/tomcat/temp
+
+安全配置
+
+1、删除全部自带应用
+
+2、禁止使用AJP 
+vi $CATALINA_BASE/conf/server.xml
+注释掉 <Connector port="8009" maxThreads="*" enableLookups="false" redirectPort="*" protocol="AJP/**" />
+
+3、关闭SHUTDOWN
+注释掉(暂时不正确，造成服务不能启动)
+<Server port="-1" shutdown="SHUTDOWN"> 
+
+               
+4、设置规则禁止上传目录执行jsp
+上传目录建立文件urlrewrite.xml 
+<urlrewrite> 
+    <rule> 
+        <from>^[\./]*/uf/.*\.jsp$</from> 
+        <to>/deny.html</to> 
+    </rule> 
+</urlrewrite>
+
+5、错误处理网页
+vi \conf\web.xml
+倒数第二行之前加入
+<error-page>
+    <error-code>404</error-code>
+    <location>/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/500.jsp</location>
+</error-page>
+并创建404.jsp和500.jsp

@@ -1,0 +1,18 @@
+系统启动流程
+
+1、启动Linux
+2、iminda 登陆，并切换到root用户
+3、停止tomcat服务 /etc/init.d/tomcat stop
+4、加载iptables规则 iptables-restore /opt/tomcat/iptables.bak
+5、退出root用户，以iminda用户启动tomcat cd /opt/tomcat/ ./bin/daemon.sh start
+
+附
+iptables配置命令
+
+目的：因linux不允许非root用户使用1000以下端口，所以只能将80端口转发到8080,443端口转发到8443，以保证用户可以使用80和443端口访问网站，从而地址栏不显示端口信息
+ iptables -A INPUT -i eth1 -p tcp --dport 80 -j ACCEPT
+ iptables -A INPUT -i eth1 -p tcp --dport 8080 -j ACCEPT
+ iptables -A PREROUTING -t nat -i eth1 -p tcp --dport 80 -j REDIRECT --to-port 8080
+ iptables -A INPUT -i eth1 -p tcp --dport 443 -j ACCEPT
+ iptables -A INPUT -i eth1 -p tcp --dport 8443 -j ACCEPT
+ iptables -A PREROUTING -t nat -i eth1 -p tcp --dport 443 -j REDIRECT --to-port 8443
